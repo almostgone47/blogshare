@@ -1,0 +1,21 @@
+<div class="container">
+  <h1 align="center"><strong> Title: </strong><%= @article.title %></h1>
+  <div class="well">
+    <h3 class="center">Description:</h3>
+    <hr>
+    <%= simple_format(@article.description) %>
+  </div>
+  <% if @article.categories.any? %>
+    <p>Categories: <% @article.categories.each do |cat| %>
+      <span class="badge"><%= link_to cat.category_name, category_path(cat) %> &nbsp; </span>
+    </p>
+    <% end %>
+  <% end %>
+  <div id="show-btns">
+    <%= link_to "Back", articles_path, class: "btn btn-secondary" %>
+    <% if logged_in? && (current_user == @article.user || current_user.admin?) %>
+      <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary" %>
+      <%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"  %>
+    <% end %>  
+  </div>
+</div>

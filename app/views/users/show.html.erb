@@ -1,0 +1,14 @@
+<div class="container">
+  <h1 align="center"><strong> User profile for </strong><%= @user.user_name %></h1>
+  <div class="well">
+    <h3 class="center">Email: <%= @user.email %></h3>
+    <h3 class="center">Admin: <%= @user.admin? %></h3>
+  </div>
+  <div id="show-btns">
+    <%= link_to "Back", articles_path, class: "btn btn-secondary" %>
+    <% if logged_in? && current_user.id == @user.id || current_user.admin? %>
+      <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary" %>
+      <%= link_to 'Delete', user_path(@user), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"  %>
+    <% end %>  
+  </div>
+</div>

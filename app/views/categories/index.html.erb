@@ -1,0 +1,23 @@
+<div class="container">
+  <h1 align="center" ><% if logged_in? && current_user.admin? %>
+                        <%= link_to 'New', new_category_path, class: "btn btn-primary" %>
+                      <% end %> List of Categories
+  </h1>
+  <hr>
+  <table id="index">
+    <tr>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+    <% @category.each do |cat|%>
+    <tr>
+      <td><%= link_to cat.category_name, category_path(cat)%></td>
+      <td><%= cat.description %></td>
+      <% if logged_in? && current_user.admin? %>
+        <td><%= link_to 'Edit', edit_category_path(cat), class: "btn btn-secondary" %></td>
+        <td><%= link_to 'Delete', category_path(cat), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"  %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+</div>

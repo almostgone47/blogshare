@@ -1,0 +1,33 @@
+<h1 align="center"><%= "Articles by: " + @category.category_name %></h1>
+<div align="center">
+  <table id="index">
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+    <% @category.articles.each do |article|%>
+    <tr>
+      <td><%= link_to article.title, article_path(article)%></td>
+      <td><%= article.description %></td>
+      <% if logged_in? && (current_user == article.user || current_user.admin?) %>
+        <td><%= link_to 'Edit', edit_article_path(article), class: "btn btn-primary" %></td>
+        <td><%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"  %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td><small>Created By: <%= article.user.user_name %></small></td>
+      <td><small>Created: <%= time_ago_in_words(article.created_at) %> ago, Updated: <%= time_ago_in_words(article.updated_at) %> ago</small></td>
+    </tr>
+    <tr>
+      <td>
+        <% if article.categories.any? %>
+          <small>Categories: <% article.categories.each do |cat| %>
+            <%= link_to cat.category_name, article_category_path(cat), class: "badge badge-pill badge-info" %> &nbsp;
+          </small>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>  
+    <% end %>
+  </table>
+</div>

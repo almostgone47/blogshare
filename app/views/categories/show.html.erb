@@ -1,0 +1,14 @@
+<div class="container">
+  <h1 align="center"><strong> User profile for </strong><%= @category.category_name %></h1>
+  <div class="well">
+    <h3 class="center">Category: <%= @category.category_name %></h3>
+    <h3 class="center">Description: <%= @category.description %></h3>
+  </div>
+  <div id="show-btns">
+    <%= link_to "Back", categories_path, class: "btn btn-secondary" %>
+    <% if logged_in? && current_user.admin? %>
+      <%= link_to 'Edit', edit_category_path(@category), class: "btn btn-primary" %>
+      <%= link_to 'Delete', category_path(@category), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"  %>
+    <% end %>  
+  </div>
+</div>
